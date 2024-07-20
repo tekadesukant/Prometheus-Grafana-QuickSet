@@ -14,19 +14,6 @@ jobs:
 
       - name: Fetch Latest Grafana Version
         run: |
-         curl -s https://dl.grafana.com/enterprise/release/ > grafana_releases.html
-
-         # Check the fetched content
-         echo "Fetched content:"
-         head -n 20 grafana_releases.html
-
-         # Extract the latest version
-         # Adjust the grep command based on the actual content structure
-         latest_version=$(grep -oP 'grafana-enterprise_\K[0-9\.]+(?=_amd64\.deb)' grafana_releases.html | sort -V | tail -n1)
-
+         latest_version=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | grep -oP '"tag_name": "\K[0-9\.]+')
          # Output the latest version
-         if [ -z "$latest_version" ]; then
-         echo "No version information found. Please check the content of grafana_releases.html."
-         else
-         echo "Latest Grafana version: $latest_version"
-         fi  
+         echo "Latest Grafana version: $latest_version" 
