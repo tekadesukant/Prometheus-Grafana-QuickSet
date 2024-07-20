@@ -1,1 +1,19 @@
+name: Fetch Grafana Versions
+
+on:
+  schedule:
+    - cron: '* * * * *' # Runs at midnight on every 10th day of the month
+
+jobs:
+  fetch_tomcat_versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch Latest Grafana Version
+        run: |
+          latest_version=$(wget -qO- https://dl.grafana.com/enterprise/release/ | grep -oP 'grafana-enterprise_\K[0-9\.]+(?=_amd64\.deb)' | sort -V | tail -n1)
+          echo "Latest Grafana version: $latest_version"
 
