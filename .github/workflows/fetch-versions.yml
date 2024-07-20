@@ -2,7 +2,7 @@ name: Fetch Grafana Versions
 
 on:
   schedule:
-    - cron: '* * * * *' # Runs at midnight on every 10th day of the month
+    - cron: '0 0 * * 0' # Runs at midnight on every 10th day of the month
 
 jobs:
   fetch_tomcat_versions:
