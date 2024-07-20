@@ -14,6 +14,12 @@ jobs:
 
       - name: Fetch Latest Grafana Version
         run: |
-          latest_version=$(wget -qO- https://dl.grafana.com/enterprise/release/ | grep -oP 'grafana-enterprise_\K[0-9\.]+(?=_amd64\.deb)' | sort -V | tail -n1)
+          wget -qO- https://dl.grafana.com/enterprise/release/ > grafana_releases.html
+
+          # Check the content of the fetched file
+          cat grafana_releases.html
+
+          # Extract the latest version based on the content structure
+          latest_version=$(grep -oP 'grafana-enterprise_\K[0-9\.]+(?=_amd64\.deb)' grafana_releases.html | sort -V | tail -n1)
           echo "Latest Grafana version: $latest_version"
 
