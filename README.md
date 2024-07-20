@@ -24,8 +24,6 @@
 
 Hey there! 👋 Welcome to **Prometheus & Grafana AutoSetup**, your ultimate solution for effortlessly installing and configuring Prometheus and Grafana. 🚀
 
-![Monitoring Magic](https://media.giphy.com/media/26AHG5KGFxSkUWw1i/giphy.gif)
-
 ## ✨ **What’s Inside?**
 
 - **Automated Script**: A sleek script that handles the heavy lifting of installing and setting up Prometheus and Grafana. Just run it and watch your monitoring stack come to life! 🛠️
