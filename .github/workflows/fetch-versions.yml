@@ -52,7 +52,7 @@ jobs:
           CURRENT_GRAF_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' grafana.sh || echo "")
           if [ "${CURRENT_GRAF_VERSION}" != "${GRAF_LATEST_VERSION}" ]; then
             echo "Grafana version differs, updating grafana.sh..."
-            sed -i "4 c LATEST_VERSION=${GRAF_LATEST_VERSION}" grafana.sh
+            sed -i "5 c LATEST_VERSION=${GRAF_LATEST_VERSION}" grafana.sh
             echo "grafana_update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Grafana."
