@@ -17,8 +17,7 @@ jobs:
         run: |
           PROM_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
           PROM_LATEST_VERSION=$(echo "${PROM_V_LATEST_VERSION}" | cut -c 2-)
-          echo "Latest Prometheus Version: ${PROM_LATEST_VERSION}"
-
+          echo "Latest Prometheus Version=${PROM_LATEST_VERSION}"
           CURRENT_PROM_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+\.[0-9]+' prometheus.sh)
           if [ "${CURRENT_PROM_VERSION}" != "${PROM_LATEST_VERSION}" ]; then
             echo "Prometheus version differs, updating prometheus.sh..."
@@ -43,8 +42,7 @@ jobs:
         run: |
           GRAF_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | jq -r '.tag_name')
           GRAF_LATEST_VERSION=$(echo "${GRAF_V_LATEST_VERSION}" | cut -c 2-)
-          echo "Latest Grafana Version: ${GRAF_LATEST_VERSION}"
-
+          echo "Latest Grafana Version=${GRAF_LATEST_VERSION}"
           CURRENT_GRAF_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' grafana.sh)
           if [ "${CURRENT_GRAF_VERSION}" != "${GRAF_LATEST_VERSION}" ]; then
             echo "Grafana version differs, updating grafana.sh..."
@@ -69,8 +67,7 @@ jobs:
         run: |
           latest_version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
           node_latest_version=$(echo "${latest_version}" | cut -c 2-)
-          echo "Fetched Latest Node Exporter Version: ${node_latest_version}"
-
+          echo "Fetched Latest Node Exporter Version=${node_latest_version}"
           CURRENT_NODE_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' node_exporter.sh)
           if [ "${CURRENT_NODE_VERSION}" != "${node_latest_version}" ]; then
             echo "Node Exporter version differs, updating node_exporter.sh..."
