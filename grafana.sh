@@ -1,7 +1,7 @@
 # Install necessary dependencies
 sudo apt-get install -y adduser libfontconfig1
 
-# Fetched latest Version
+LATEST_VERSION=11.1.0 
 LATEST_VERSION= 
 
 # Construct the download URL for the latest version
