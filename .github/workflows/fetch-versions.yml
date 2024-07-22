@@ -24,7 +24,7 @@ jobs:
           CURRENT_PROM_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+\.[0-9]+' prometheus.sh || echo "")
           if [ "${CURRENT_PROM_VERSION}" != "${PROM_LATEST_VERSION}" ]; then
             echo "Prometheus version differs, updating prometheus.sh..."
-            sed -i "5 c LATEST_VERSION=${PROM_LATEST_VERSION}" prometheus.sh
+            sed -i "4 c LATEST_VERSION=${PROM_LATEST_VERSION}" prometheus.sh
             echo "prometheus_update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Prometheus."
