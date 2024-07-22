@@ -64,9 +64,12 @@ jobs:
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add grafana.sh
-          git commit -m "Update Grafana.sh file"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Node_Exporter.sh file"
+            git push
+          else
+            echo "No changes detected, skipping commit."
+          fi
 
       - name: Fetch Latest Node Exporter Version
         id: fetch_node_exporter_version
