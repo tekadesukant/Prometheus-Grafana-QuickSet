@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Fetched Latest Prometheus Version
-LATEST_VERSION= 
-LATEST_VERSION=2.53.1
+LATEST_VERSION=2.53.1 
+
 # Construct the download URL
 DOWNLOAD_URL="https://github.com/prometheus/prometheus/releases/download/v${LATEST_VERSION}/prometheus-${LATEST_VERSION}.linux-amd64.tar.gz"
 
