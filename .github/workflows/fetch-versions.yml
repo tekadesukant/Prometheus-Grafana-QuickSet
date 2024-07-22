@@ -19,8 +19,15 @@ jobs:
           echo "Latest Prometheus Version: ${PROM_LATEST_VERSION}"
 
           sed -i " 5 c LATEST_VERSION=${PROM_LATEST_VERSION} " prometheus.sh 
-          
 
+      - name: Commit updated prometheus versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add prometheus.sh   
+          git commit -m "Update Prometheus.sh file" 
+          git push
+          
       - name: Fetch Latest Grafana Version
         run: |
            GRAF_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | jq -r '.tag_name')
@@ -29,10 +36,26 @@ jobs:
 
            sed -i " 4 c LATEST_VERSION=${GRAF_LATEST_VERSION} " grafana.sh
 
+      - name: Commit updated grafana versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add grafana.sh   
+          git commit -m "Update Grafana.sh file" 
+          git push
+
       - name: Fetch Latest Note Exporter Version
         run: |
            latest_version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')  
            node_latest_version=$(echo "${latest_version}" | cut -c 2-)
            echo "Fetched Latest Node Exporter Version: ${node_latest_version}"
 
-           sed -i " 2 c LATEST_VERSION=${node_latest_version}" node_exporter.sh
+           sed -i " 4 c LATEST_VERSION=${node_latest_version}" node_exporter.sh
+
+      - name: Commit updated node exporter versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add node_exporter.sh   
+          git commit -m "Update Node_Exporter.sh file" 
+          git push
