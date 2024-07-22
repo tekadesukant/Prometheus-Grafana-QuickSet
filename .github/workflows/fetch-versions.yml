@@ -25,13 +25,14 @@ jobs:
           if [ "${CURRENT_PROM_VERSION}" != "${PROM_LATEST_VERSION}" ]; then
             echo "Prometheus version differs, updating prometheus.sh..."
             sed -i "5 c LATEST_VERSION=${PROM_LATEST_VERSION}" prometheus.sh
-            echo "update_needed=true" >> $GITHUB_ENV
+            echo "prometheus_update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Prometheus."
+            echo "prometheus_update_needed=false" >> $GITHUB_ENV
           fi
 
       - name: Commit updated Prometheus version
-        if: env.update_needed == 'true'
+        if: env.prometheus_update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
@@ -52,13 +53,14 @@ jobs:
           if [ "${CURRENT_GRAF_VERSION}" != "${GRAF_LATEST_VERSION}" ]; then
             echo "Grafana version differs, updating grafana.sh..."
             sed -i "4 c LATEST_VERSION=${GRAF_LATEST_VERSION}" grafana.sh
-            echo "update_needed=true" >> $GITHUB_ENV
+            echo "grafana_update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Grafana."
+            echo "grafana_update_needed=false" >> $GITHUB_ENV
           fi
 
       - name: Commit updated Grafana version
-        if: env.update_needed == 'true'
+        if: env.grafana_update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
@@ -79,13 +81,14 @@ jobs:
           if [ "${CURRENT_NODE_VERSION}" != "${node_latest_version}" ]; then
             echo "Node Exporter version differs, updating node_exporter.sh..."
             sed -i "4 c LATEST_VERSION=${node_latest_version}" node_exporter.sh
-            echo "update_needed=true" >> $GITHUB_ENV
+            echo "node_exporter_update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Node Exporter."
+            echo "node_exporter_update_needed=false" >> $GITHUB_ENV
           fi
 
       - name: Commit updated Node Exporter version
-        if: env.update_needed == 'true'
+        if: env.node_exporter_update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
