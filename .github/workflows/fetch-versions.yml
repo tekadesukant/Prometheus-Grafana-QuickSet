@@ -2,7 +2,7 @@ name: Fetch Prometheus Grafana Versions
 
 on:
   schedule:
-    - cron: '0 0 */10 * *' # Runs at midnight on every 10th day of the month
+    - cron: '* * * * *' # Runs at midnight on every 10th day of the month
 
 jobs:
   fetch_promgraf_versions:
