@@ -1,4 +1,4 @@
-name: Fetch Promethus Grafana Versions
+name: Fetch Prometheus Grafana Versions
 
 on:
   schedule:
@@ -12,22 +12,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch Latest Promethus Version
+      - name: Fetch Latest Prometheus Version
         run: |
           PROM_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
           echo ${PROM_V_LATEST_VERSION}
           PROM_LATEST_VERSION=$(echo "${PROM_V_LATEST_VERSION}" | cut -c 2-)
           echo ${PROM_LATEST_VERSION}
 
-          sed -i " 3 c PROM_V_LATEST_VERSION=${PROM_V_LATEST_VERSION} " promethus.sh 
-          sed -i " 4 c PROM_LATEST_VERSION=${PROM_LATEST_VERSION} " promethus.sh 
+          sed -i " 3 c PROM_V_LATEST_VERSION=${PROM_V_LATEST_VERSION} " prometheus.sh 
+          sed -i " 4 c PROM_LATEST_VERSION=${PROM_LATEST_VERSION} " prometheus.sh 
 
-      - name: Commit updated promethus versions
+      - name: Commit updated prometheus versions
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add promethus.sh   
-          git commit -m "Update Promethus.sh file" 
+          git add prometheus.sh   
+          git commit -m "Update Prometheus.sh file" 
           git push
 
       - name: Fetch Latest Grafana Version
@@ -39,7 +39,7 @@ jobs:
 
            sed -i " 4 c LATEST_VERSION=${GRAF_LATEST_VERSION} " grafana.sh
 
-      - name: Commit updated promethus versions
+      - name: Commit updated grafana versions
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
