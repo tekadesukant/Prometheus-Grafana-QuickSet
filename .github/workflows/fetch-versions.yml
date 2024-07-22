@@ -1,19 +1,50 @@
-name: Fetch Grafana Versions
+name: Fetch Promethus Grafana Versions
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Runs at midnight on every 10th day of the month
+    - cron: '0 0 1 1,4,7,10 *' # Runs at 00:00, on day 1 of the month, only in January, April, July, and October.
 
 jobs:
-  fetch_tomcat_versions:
+  fetch_promgraf_versions:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Fetch Latest Promethus Version
+        run: |
+          PROM_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+          echo ${PROM_V_LATEST_VERSION}
+          PROM_LATEST_VERSION=$(echo "${PROM_V_LATEST_VERSION}" | cut -c 2-)
+          echo ${PROM_LATEST_VERSION}
+
+          sed -i " 3 c PROM_V_LATEST_VERSION=${PROM_V_LATEST_VERSION} " promethus.sh 
+          sed -i " 4 c PROM_LATEST_VERSION=${PROM_LATEST_VERSION} " promethus.sh 
+
+      - name: Commit updated promethus versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add promethus.sh   
+          git commit -m "Update Promethus.sh file" 
+          git push
+
       - name: Fetch Latest Grafana Version
         run: |
-         latest_version=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | grep -oP '"tag_name": "\K[0-9\.]+')
-         # Output the latest version
-         echo "Latest Grafana version: $latest_version" 
+           GRAF_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | jq -r '.tag_name')
+           echo ${GRAF_V_LATEST_VERSION}
+           GRAF_LATEST_VERSION=$(echo "${GRAF_V_LATEST_VERSION}" | cut -c 2-)
+           echo ${GRAF_LATEST_VERSION}
+
+           sed -i " 4 c LATEST_VERSION=${GRAF_LATEST_VERSION} " grafana.sh
+
+      - name: Commit updated promethus versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add grafana.sh   
+          git commit -m "Update Grafana.sh file" 
+          git push
+           
+      
