@@ -2,7 +2,7 @@ name: Fetch Prometheus Grafana Versions
 
 on:
   schedule:
-    - cron: '* * * * *' 
+    - cron: '0 0 */10 * *' # Runs at midnight on every 10th day of the month
 
 jobs:
   fetch_promgraf_versions:
@@ -14,22 +14,24 @@ jobs:
 
       - name: Fetch Latest Prometheus Version
         id: fetch_prometheus_version
+        shell: bash
         run: |
+          set -e
           PROM_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
           PROM_LATEST_VERSION=$(echo "${PROM_V_LATEST_VERSION}" | cut -c 2-)
-          echo "Latest Prometheus Version=${PROM_LATEST_VERSION}"
-          CURRENT_PROM_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+\.[0-9]+' prometheus.sh)
+          echo "Latest Prometheus Version: ${PROM_LATEST_VERSION}"
+
+          CURRENT_PROM_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+\.[0-9]+' prometheus.sh || echo "")
           if [ "${CURRENT_PROM_VERSION}" != "${PROM_LATEST_VERSION}" ]; then
             echo "Prometheus version differs, updating prometheus.sh..."
             sed -i "5 c LATEST_VERSION=${PROM_LATEST_VERSION}" prometheus.sh
-            echo "::set-output name=update_needed::true"
+            echo "update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Prometheus."
-            echo "::set-output name=update_needed::false"
           fi
 
       - name: Commit updated Prometheus version
-        if: steps.fetch_prometheus_version.outputs.update_needed == 'true'
+        if: env.update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
@@ -39,22 +41,24 @@ jobs:
 
       - name: Fetch Latest Grafana Version
         id: fetch_grafana_version
+        shell: bash
         run: |
+          set -e
           GRAF_V_LATEST_VERSION=$(curl -s https://api.github.com/repos/grafana/grafana/releases/latest | jq -r '.tag_name')
           GRAF_LATEST_VERSION=$(echo "${GRAF_V_LATEST_VERSION}" | cut -c 2-)
-          echo "Latest Grafana Version=${GRAF_LATEST_VERSION}"
-          CURRENT_GRAF_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' grafana.sh)
+          echo "Latest Grafana Version: ${GRAF_LATEST_VERSION}"
+
+          CURRENT_GRAF_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' grafana.sh || echo "")
           if [ "${CURRENT_GRAF_VERSION}" != "${GRAF_LATEST_VERSION}" ]; then
             echo "Grafana version differs, updating grafana.sh..."
             sed -i "4 c LATEST_VERSION=${GRAF_LATEST_VERSION}" grafana.sh
-            echo "::set-output name=update_needed::true"
+            echo "update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Grafana."
-            echo "::set-output name=update_needed::false"
           fi
 
       - name: Commit updated Grafana version
-        if: steps.fetch_grafana_version.outputs.update_needed == 'true'
+        if: env.update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
@@ -64,22 +68,24 @@ jobs:
 
       - name: Fetch Latest Node Exporter Version
         id: fetch_node_exporter_version
+        shell: bash
         run: |
+          set -e
           latest_version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
           node_latest_version=$(echo "${latest_version}" | cut -c 2-)
-          echo "Fetched Latest Node Exporter Version=${node_latest_version}"
-          CURRENT_NODE_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' node_exporter.sh)
+          echo "Fetched Latest Node Exporter Version: ${node_latest_version}"
+
+          CURRENT_NODE_VERSION=$(grep -oP 'LATEST_VERSION=\K[0-9]+\.[0-9]+' node_exporter.sh || echo "")
           if [ "${CURRENT_NODE_VERSION}" != "${node_latest_version}" ]; then
             echo "Node Exporter version differs, updating node_exporter.sh..."
             sed -i "4 c LATEST_VERSION=${node_latest_version}" node_exporter.sh
-            echo "::set-output name=update_needed::true"
+            echo "update_needed=true" >> $GITHUB_ENV
           else
             echo "No update needed for Node Exporter."
-            echo "::set-output name=update_needed::false"
           fi
 
       - name: Commit updated Node Exporter version
-        if: steps.fetch_node_exporter_version.outputs.update_needed == 'true'
+        if: env.update_needed == 'true'
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
