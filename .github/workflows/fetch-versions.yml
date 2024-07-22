@@ -34,7 +34,7 @@ jobs:
            GRAF_LATEST_VERSION=$(echo "${GRAF_V_LATEST_VERSION}" | cut -c 2-)
            echo "Latest Grafana Version: ${GRAF_LATEST_VERSION}"
 
-           sed -i " 4 c LATEST_VERSION=${GRAF_LATEST_VERSION} " grafana.sh
+           sed -i " 5 c LATEST_VERSION=${GRAF_LATEST_VERSION} " grafana.sh
 
       - name: Commit updated grafana versions
         run: |
