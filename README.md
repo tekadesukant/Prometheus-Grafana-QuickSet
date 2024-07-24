@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&text=Hello!&height=100&section=header"/>
+</p>
+
 <div id="header" align="center">
   <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYm5vaHRnaGpjbXl0M2V2ZGo4Y3E3ZDlua2tmaDZidHVyNTdyazY0NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/KzJkzjggfGN5Py6nkT/giphy.gif" width="200"/>
 </div>
@@ -30,3 +34,7 @@ Hey there! 👋 Welcome to **Prometheus & Grafana AutoSetup**, your ultimate sol
 - **Weekly Updates**: Our script gets updated every week! A job runs to fetch the latest versions and automatically updates the setup files for you. 🌟
 - **Easy Peasy**: Forget the hassle of manual setup. Our script makes it a breeze to get Prometheus and Grafana up and running in no time. ⏱️
 - **Ready for Action**: Dive straight into monitoring and visualizing your data with Prometheus and Grafana fully configured and ready to go! 📊
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer"/>
+</p>
