@@ -61,15 +61,15 @@ jobs:
            latest_version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')  
            node_latest_version=$(echo "${latest_version}" | cut -c 2-)
            echo "Fetched Latest Node Exporter Version: ${node_latest_version}"
-           sed -i " 4 c LATEST_VERSION=${node_latest_version}" amazonlinux-nodeexporter.sh
-           sed -i " 4 c LATEST_VERSION=${node_latest_version}" ubuntu-nodeexporter.sh
+           sed -i " 4 c LATEST_VERSION=${node_latest_version}" amazonlinux-nodexporter.sh
+           sed -i " 4 c LATEST_VERSION=${node_latest_version}" ubuntu-nodexporter.sh
            
       - name: Commit updated node exporter versions
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add amazonlinux-nodeexporter.sh
-          git add ubuntu-nodeexporter.sh
+          git add amazonlinux-nodexporter.sh
+          git add ubuntu-nodexporter.sh
           if ! git diff --cached --quiet; then
             echo "Node Exporter version differs, updating 3 node_exporter files..."
             git commit -m "Update Node_Exporter.sh file"
