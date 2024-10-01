@@ -2,7 +2,7 @@ name: Fetch Prometheus Grafana Versions
 
 on:
   schedule:
-    - cron: '0 0 1 * *' # Runs at 00:00, on day 1 of the month, only in January, April, July, and October.
+    - cron: '0 0 1 * *' # Runs at 00:00, on day 1 of each month
 
 jobs:
   fetch_promgraf_versions:
