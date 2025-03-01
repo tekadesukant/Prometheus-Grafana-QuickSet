@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fetched Latest Node Exporter Version 
-LATEST_VERSION=1.8.2
+LATEST_VERSION=1.9.0
 
 # Construct the download URL using the latest version
 download_url="https://github.com/prometheus/node_exporter/releases/download/v${latest_version}/node_exporter-${latest_version}.linux-amd64.tar.gz"

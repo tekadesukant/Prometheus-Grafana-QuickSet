@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fetch the latest Node Exporter version
-LATEST_VERSION=1.8.2
+LATEST_VERSION=1.9.0
 
 # Check if wget is installed, if not, install it
 if ! command -v wget &> /dev/null; then
