@@ -2,7 +2,7 @@
 sudo apt-get update
 
 # Fetch the latest Grafana version
-LATEST_VERSION=11.5.2 
+LATEST_VERSION=11.6.0 
 
 # Install necessary dependencies
 sudo apt-get install -y adduser libfontconfig1
