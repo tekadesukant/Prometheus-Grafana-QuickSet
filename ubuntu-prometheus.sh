@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fetched Latest Prometheus Version
-LATEST_VERSION=3.4.1 
+LATEST_VERSION=3.4.2 
 
 # Check if wget is installed, if not, install it
 if ! command -v wget &> /dev/null; then
